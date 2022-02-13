@@ -53,3 +53,29 @@ const state = {
   ],
   cart: []
 };
+
+const storeItem = document.querySelector("ul")
+storeItem.setAttribute("class", "item-list store--item-list" )
+
+
+function renderStoreItem() {
+
+  for (const item of state.items) {
+    const li = document.createElement("li")
+    storeItem.appendChild(li)
+    const div = document.createElement("div")
+    div.setAttribute("class", "store--item--icon")
+    li.appendChild(div)
+    const img = document.createElement("img")
+    img.src = `assets/icons/${item.id}.svg`
+    img.alt = `${item.name}`
+    div.appendChild(img)
+    const button = document.createElement("button")
+    li.appendChild(button)
+    button.innerText = "ADD TO CART"
+    
+  }
+
+}
+
+renderStoreItem()

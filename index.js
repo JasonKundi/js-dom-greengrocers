@@ -54,11 +54,12 @@ const state = {
   cart: []
 };
 
-const storeItem = document.querySelector("ul")
-storeItem.setAttribute("class", "item-list store--item-list" )
+
 
 
 function renderStoreItem() {
+  const storeItem = document.querySelector("ul")
+  storeItem.setAttribute("class", "item-list store--item-list" )
 
   for (const item of state.items) {
     const li = document.createElement("li")
@@ -72,7 +73,7 @@ function renderStoreItem() {
     img.src = `assets/icons/${item.id}.svg`
     img.alt = `${item.name}`
     div.appendChild(img)
-    
+
     const button = document.createElement("button")
     li.appendChild(button)
     button.innerText = "ADD TO CART"
@@ -83,11 +84,15 @@ function renderStoreItem() {
   })
 }
 
-const cartItem = document.createElement("ul")
-cartItem.setAttribute("class", "item-list cart--item-list")
-
 
 function renderCartItem() {
+
+  const cartItemContainer = document.createElement("div")
+  cartItemContainer.setAttribute("class", "cart--item-list-container")
+
+  const cartItem = document.createElement("ul")
+  cartItem.setAttribute("class", "item-list cart--item-list")
+  cartItemContainer.appendChild(cartItem)
 
   const li = document.createElement("li")
   cartItem.appendChild("li")
@@ -103,6 +108,7 @@ function renderCartItem() {
 
     const removeButton = document.createElement("button")
     removeButton.setAttribute("class", "quantity-btn remove-btn center")
+    removeButton.innerText = "-"
     p.appendChild(removeButton)
 
     const textCenter = document.createElement("span")
@@ -111,8 +117,10 @@ function renderCartItem() {
 
     const addButton = document.createElement("button")
     addButton.setAttribute("class", "quantity-btn add-btn center")
+    addButton.innerText = "+"
     textCenter.appendChild(addButton)
 
+    cart.append(cartItemContainer)
 
 
 

@@ -56,11 +56,11 @@ const state = {
 
 const storeItem = document.querySelector("#storeItem");
 
-
 function render() {
   clear();
   renderStoreItem();
   renderCartItem();
+  totalCartCalculator();
 }
 
 function clear() {
@@ -95,21 +95,19 @@ function renderStoreItem() {
           item: item,
         });
       }
-      render();
+      total.innerText = "£" + totalCartCalculator();
+      render()
     });
   }
 }
 
 const cartItem = document.querySelector("#cartList");
-    
 
 function renderCartItem() {
   for (const orderedItem of state.cart) {
-
-    console.log("Oioiiii" , orderedItem)
+    console.log("Oioiiii", orderedItem);
 
     const li = document.createElement("li");
-    li.innerText = orderedItem.quantity + "x" + orderedItem.item.name
     cartItem.append(li);
 
     const img = document.createElement("img");
@@ -125,30 +123,47 @@ function renderCartItem() {
     const removeButton = document.createElement("button");
     removeButton.setAttribute("class", "quantity-btn remove-btn center");
     removeButton.innerText = "-";
-    removeButton.addEventListener("click", function(){
-      orderedItem.quantity--
-      if (orderedItem.quantity ===0) {
-        const orderedItemIndex = state.cart.findIndex( i => i===orderedItem)
-        state.cart.splice(orderedItemIndex, 1)
+    removeButton.addEventListener("click", function () {
+      orderedItem.quantity--;
+      if (orderedItem.quantity === 0) {
+        const orderedItemIndex = state.cart.findIndex((i) => i === orderedItem);
+        state.cart.splice(orderedItemIndex, 1);
       }
-      render()
-    })
+  
+      render();
+    });
     li.append(removeButton);
 
     const textCenter = document.createElement("span");
     textCenter.setAttribute("class", "quantity-text center");
-    textCenter.innerText = orderedItem.quantity
+    textCenter.innerText = orderedItem.quantity;
     li.append(textCenter);
 
     const addButton = document.createElement("button");
     addButton.setAttribute("class", "quantity-btn add-btn center");
     addButton.innerText = "+";
-    addButton.addEventListener("click", function() {
-      orderedItem.quantity++
-      render()
-    })
+    addButton.addEventListener("click", function () {
+      orderedItem.quantity++;
+      
+      render();
+    });
     li.append(addButton);
   }
+}
+const totalSection = document.querySelector("class", "total-section");
+let total = document.querySelector("#totalNumber");
+
+function totalCartCalculator() {
+  let total = 0;
+  for (const orderedItem of state.cart) {
+    console.log("hello" , orderedItem.item.price)
+    if (orderedItem) {
+      total += orderedItem.item.price * orderedItem.quantity;
+    } else {
+      return total;
+    }
+  }
+  return total.toFixed(2)
 }
 
 render();

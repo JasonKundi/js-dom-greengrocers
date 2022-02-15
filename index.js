@@ -95,8 +95,8 @@ function renderStoreItem() {
           item: item,
         });
       }
-      total.innerText = "£" + totalCartCalculator();
-      render()
+      
+      render();
     });
   }
 }
@@ -129,7 +129,7 @@ function renderCartItem() {
         const orderedItemIndex = state.cart.findIndex((i) => i === orderedItem);
         state.cart.splice(orderedItemIndex, 1);
       }
-  
+
       render();
     });
     li.append(removeButton);
@@ -144,26 +144,21 @@ function renderCartItem() {
     addButton.innerText = "+";
     addButton.addEventListener("click", function () {
       orderedItem.quantity++;
-      
+
       render();
     });
     li.append(addButton);
   }
 }
 const totalSection = document.querySelector("class", "total-section");
-let total = document.querySelector("#totalNumber");
+const cartTotal = document.querySelector("#totalNumber");
 
 function totalCartCalculator() {
   let total = 0;
   for (const orderedItem of state.cart) {
-    console.log("hello" , orderedItem.item.price)
-    if (orderedItem) {
-      total += orderedItem.item.price * orderedItem.quantity;
-    } else {
-      return total;
-    }
+    total += orderedItem.item.price * orderedItem.quantity;
   }
-  return total.toFixed(2)
+  cartTotal.innerText= "£" + total.toFixed(2);
 }
 
 render();
